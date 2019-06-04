@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6e571400-1926-4002-8cc7-33bc0752d39d" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$test_concat.coverage" NAME="test_concat Coverage Results" MODIFIED="1555060825853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$testOS.coverage" NAME="testOS Coverage Results" MODIFIED="1555404232909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$Celeb_generator_model.coverage" NAME="Celeb_generator_model Coverage Results" MODIFIED="1553677599685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$main.coverage" NAME="main Coverage Results" MODIFIED="1555757945124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$seperate.coverage" NAME="seperate Coverage Results" MODIFIED="1553677470338" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SeperateNight" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$g_FeedForward.coverage" NAME="g_FeedForward Coverage Results" MODIFIED="1554990211254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+    <SUITE FILE_PATH="coverage/CycleGAN$seperate.coverage" NAME="seperate Coverage Results" MODIFIED="1551212773928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SeperateNight" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$testOS2.coverage" NAME="testOS2 Coverage Results" MODIFIED="1555404482127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$dcGenerator.coverage" NAME="dcGenerator Coverage Results" MODIFIED="1553693141976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$Vanilla_dcGAN.coverage" NAME="Vanilla_dcGAN Coverage Results" MODIFIED="1554989583184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+    <SUITE FILE_PATH="coverage/GenerativeAdvesarialNetwork$g_even.coverage" NAME="g_even Coverage Results" MODIFIED="1554990398049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_feedforward.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+              <folding>
+                <element signature="e#107#139#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_vgg19.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="23" selection-start-column="23" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_srgan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="8" column="36" lean-forward="true" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp/generator_tf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="960">
+              <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_even.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="560">
+              <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="624">
+              <caret line="39" column="47" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+              <folding>
+                <element signature="e#42#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/gan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="344">
+              <caret line="286" column="87" selection-start-line="286" selection-start-column="87" selection-end-line="286" selection-end-column="87" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>layers.</find>
+      <find>sample_interval</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>keras</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/eenx15_19_21_gan_2/eenx15_19_21_gan" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/SeperateNight/seperate.py" />
+        <option value="$PROJECT_DIR$/Tensorflow/dcGAN.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/Celeb_generator_model.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/dcGenerator.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/Vanilla_dcGAN.py" />
+        <option value="$PROJECT_DIR$/Tensorflow/stylegan/training/networks_stylegan.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/wirehed_generator.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/even_generator_v2.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/util/Nvidia_altered_functions.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/ProGAN_generator.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/discriminators/ProGAN_discriminator.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_even.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_FeedForward.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/test_concat.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/test.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_FeedForward.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_tf.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_AutoEnc.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_ccn.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_autoenc.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/layers.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp/generator_tf.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/testOS.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS2.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/util.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_vgg19.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_even.py" />
+        <option value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/main.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="GenerativeAdvesarialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GenerativeAdvesarialNetwork" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GenerativeAdvesarialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GenerativeAdvesarialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="eenx15_19_21_gan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GenerativeAdvesarialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GenerativeAdvesarialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="eenx15_19_21_gan" type="462c0819:PsiDirectoryNode" />
+              <item name="GAN" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GenerativeAdvesarialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GenerativeAdvesarialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="eenx15_19_21_gan" type="462c0819:PsiDirectoryNode" />
+              <item name="GAN" type="462c0819:PsiDirectoryNode" />
+              <item name="networks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GenerativeAdvesarialNetwork" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GenerativeAdvesarialNetwork" type="462c0819:PsiDirectoryNode" />
+              <item name="eenx15_19_21_gan" type="462c0819:PsiDirectoryNode" />
+              <item name="GAN" type="462c0819:PsiDirectoryNode" />
+              <item name="networks" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+      <recent name="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks" />
+      <recent name="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp" />
+      <recent name="$PROJECT_DIR$/eenx15_19_21_gan" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="g_even" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CycleGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_even.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CycleGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="testOS" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CycleGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="testOS2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CycleGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_concat" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CycleGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/test_concat.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.testOS2" />
+        <item itemvalue="Python.testOS" />
+        <item itemvalue="Python.test_concat" />
+        <item itemvalue="Python.g_even" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6e571400-1926-4002-8cc7-33bc0752d39d" name="Default Changelist" comment="" />
+      <created>1550572544331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1550572544331</updated>
+      <workItem from="1550572545979" duration="570000" />
+      <workItem from="1550733032813" duration="39000" />
+      <workItem from="1551190910314" duration="2158000" />
+      <workItem from="1552122730473" duration="5000" />
+      <workItem from="1553246932103" duration="3275000" />
+      <workItem from="1553501995346" duration="341000" />
+      <workItem from="1553503828003" duration="1354000" />
+      <workItem from="1553520288015" duration="436000" />
+      <workItem from="1553530185878" duration="240000" />
+      <workItem from="1553591606602" duration="2247000" />
+      <workItem from="1553676384716" duration="11257000" />
+      <workItem from="1553767098186" duration="1361000" />
+      <workItem from="1553768549940" duration="484000" />
+      <workItem from="1554368297145" duration="74000" />
+      <workItem from="1554368652719" duration="857000" />
+      <workItem from="1554385758129" duration="230000" />
+      <workItem from="1554456894027" duration="628000" />
+      <workItem from="1554707863170" duration="77000" />
+      <workItem from="1554708334873" duration="669000" />
+      <workItem from="1554885498359" duration="3102000" />
+      <workItem from="1554981296822" duration="7787000" />
+      <workItem from="1555056732647" duration="4397000" />
+      <workItem from="1555339387762" duration="393000" />
+      <workItem from="1555345267270" duration="1754000" />
+      <workItem from="1555393998144" duration="9930000" />
+      <workItem from="1555486188742" duration="2017000" />
+      <workItem from="1555757367557" duration="711000" />
+      <workItem from="1555922469525" duration="3399000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="59792000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.06393963" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.10722891" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32891566" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.3297568" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/eenx15-19-21-gan" />
+      <path value="$PROJECT_DIR$/Tensorflow/stylegan" />
+      <path value="$PROJECT_DIR$/eenx15_19_21_gan/eenx15_19_21_gan" />
+      <path value="$PROJECT_DIR$/eenx15_19_21_gan_2/eenx15_19_21_gan" />
+      <path value="$PROJECT_DIR$/eenx15_19_21_gan" />
+    </ignored-roots>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/night.jpg" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/networks_progan.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/run_metrics.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/dcGenerator.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/Vanilla_dcGAN.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/networks_stylegan.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/training_loop.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/loss.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/pretrained_example.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/dnnlib/util.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/dnnlib/submission/run_context.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/training/dataset.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/dnnlib/tflib/network.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/dnnlib/tflib/optimizer.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/dnnlib/tflib/tfutil.py" />
+    <entry file="file://$PROJECT_DIR$/Tensorflow/stylegan/generate_figures.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/even_generator_v2.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/gan.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/even_generator.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/util/layers.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/ProGAN_generator.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/generators/wirehed_generator.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/discriminators/ProGAN_discriminator.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/util/Nvidia_altered_functions.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_nordh.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_tf.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_suhren.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_wirehed.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/g_even.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/test_concat.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/test.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp/generator_wirehed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp/d_DoItYourself.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_ccn.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_autoenc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#107#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS2.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/testOS.py" />
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_cnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="39" column="31" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_feedforward.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#107#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/temp/generator_tf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="286" column="87" selection-start-line="286" selection-start-column="87" selection-end-line="286" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/layers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/generator_even.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_vgg19.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/networks/models/discriminator_srgan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="36" lean-forward="true" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eenx15_19_21_gan/GAN/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="39" column="47" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
+          <folding>
+            <element signature="e#42#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
