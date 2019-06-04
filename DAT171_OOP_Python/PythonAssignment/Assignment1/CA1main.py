@@ -6,13 +6,15 @@ from scipy.sparse import csr_matrix
 from matplotlib.collections import LineCollection
 import scipy.sparse.csgraph as cs
 from scipy.spatial import cKDTree
+import os
+
+filepath = os.path.dirname(os.path.abspath(__file__))
 
 # Choose .txt-file, radius and start/end-city here
 # ---------------------------------------------------------------------------
-# FILENAME, RADIUS, STARTCITY, ENDCITY = 'SampleCoordinates.txt', 0.08, 0, 5
-# FILENAME, RADIUS, STARTCITY, ENDCITY = 'HungaryCities.txt', 0.005, 311, 702
-FILENAME, RADIUS, STARTCITY, ENDCITY = 'GermanyCities.txt', 0.0025, 1573, 10584
-
+# FILENAME, RADIUS, STARTCITY, ENDCITY = cd + '/SampleCoordinates.txt', 0.08, 0, 5
+# FILENAME, RADIUS, STARTCITY, ENDCITY =  cd + '/HungaryCities.txt', 0.005, 311, 702
+FILENAME, RADIUS, STARTCITY, ENDCITY = filepath + '/GermanyCities.txt', 0.0025, 1573, 10584
 
 def read_coordinate_file(filename):
     """
