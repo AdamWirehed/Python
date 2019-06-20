@@ -16,6 +16,7 @@ filepath = os.path.dirname(os.path.abspath(__file__))
 # FILENAME, RADIUS, STARTCITY, ENDCITY =  filepath + '/HungaryCities.txt', 0.005, 311, 702
 FILENAME, RADIUS, STARTCITY, ENDCITY = filepath + '/GermanyCities.txt', 0.0025, 1573, 10584
 
+
 def read_coordinate_file(filename):
     """
     Task 1: Function that reads the given coordinate file and parses the results into an array of coordinates
@@ -63,11 +64,11 @@ def construct_graph_connections(coord_list, radius):
     """
     Task 3: Function that computes all the connections between all the points in the
         coordinates list that are within the radius given"
-    
+
     :param coord_list: numpy array of coordinates
     :param radius: boundary condition for max distance for single travel
-    :type coord_list: numpy.array 
-    
+    :type coord_list: numpy.array
+
     :return cost_array, indices: numpy array of cost for each travel possible and the indices for the travels
     """""
 
@@ -266,5 +267,3 @@ print('plot_pointsTime: {} s' .format(plot_pointsTime - compute_pathTime))
 print('Total run time: {} s' .format(plot_pointsTime - loop_time + readfileTime - pre_loop_time))
 print()
 print('Cheapest path: {} \ntotal cost {}' .format(cheapestPath, costPath))
-
-

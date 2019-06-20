@@ -1,5 +1,9 @@
 # Script of the game Blackjack
-# Using classes to decide the rules, number och decks in play and the course of the game
+# Using classes to decide the rules, number och decks in play and the course of
+# the game
+
+import numpy as np
+
 
 class Blackjack:
     """Stating the rules, number of decks in play and the course of the game"""
@@ -17,44 +21,48 @@ class Blackjack:
 
     def setupDeck(self):
         """Choosing the amount of decks in play"""
-        import numpy as np
         quarter = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        deck = np.array([quarter, quarter, quarter, quarter])  # Creating a deck
+        deck = np.array([quarter, quarter, quarter, quarter])  # Creating deck
 
         nrDecks = input('How many decks should be in play? (1-4): ')
         print()
 
-        self.dInplay = np.repeat(deck, nrDecks)  # Stating how many decks will be in play
+        self.dInplay = np.repeat(deck, nrDecks)
+        # Stating how many decks will be in play
 
     def dealingCards(self):
         """Card dealing"""
-        import numpy as np
         import random
         posCard1 = random.randint(0, len(self.dInplay))
         card1 = self.dInplay[posCard1]
         np.delete(self.dInplay, posCard1)
         posCard2 = random.randint(0, len(self.dInplay))
         card2 = self.dInplay[posCard2]
-        np.delete(self.dInplay, posCard2)  # Dealing the cards to the player and deleting them from the deck
+        np.delete(self.dInplay, posCard2)
+        # Dealing the cards to the player and deleting them from the deck
 
         import time
         print('Dealing cards...')
         print()
         time.sleep(2)
         self.playerHand = card1 + card2
-        self.playerHandstr = 'Player hand: ' + str(card1) + ' and ' + str(card2)
+        self.playerHandstr = 'Player hand: ' + str(card1) + ' and ' \
+            + str(card2)
         print(self.playerHandstr)  # Showing the player his cards
 
         self.session = 'Start'
         while self.playerHand < 21 and self.session != 'Over':
-            self.playerChoice = input('Hit or stand?: ')  # Letting the player to chose to hit or stand
+            self.playerChoice = input('Hit or stand?: ')
+            # Letting the player to chose to hit or stand
 
             if self.playerChoice == 'hit':
                 posCardNew = random.randint(0, len(self.dInplay))
                 cardNew = self.dInplay[posCardNew]
-                np.delete(self.dInplay, posCardNew)  # Dealing the player a new card and removing it from the deck
+                np.delete(self.dInplay, posCardNew)
+                # Dealing the player a new card and removing it from the deck
 
-                self.playerHandstr = 'Player hand: ' + str(self.playerHand) + ' and ' + str(cardNew)
+                self.playerHandstr = 'Player hand: ' + str(self.playerHand) + \
+                    ' and ' + str(cardNew)
                 self.playerHand = self.playerHand + cardNew
                 print(self.playerHandstr)  # Showing the player the card
                 print()
@@ -65,10 +73,12 @@ class Blackjack:
                 np.delete(self.dInplay, posHouse1)
                 posHouse2 = random.randint(0, len(self.dInplay))
                 house2 = self.dInplay[posHouse2]
-                np.delete(self.dInplay, posHouse2)  # Dealing the cards to the house and deleting them from the deck
+                np.delete(self.dInplay, posHouse2)
+                # Dealing cards to the house and deleting them from the deck
 
                 self.houseHand = house1 + house2
-                self.houseHandstr = 'House hand: ' + str(house1) + ' and ' + str(house2)
+                self.houseHandstr = 'House hand: ' + str(house1) + ' and ' \
+                    + str(house2)
                 print(self.houseHandstr)  # Showing the house's cards
                 time.sleep(2)
 
@@ -76,7 +86,8 @@ class Blackjack:
                     posHouseNew = random.randint(0, len(self.dInplay))
                     houseNew = self.dInplay[posHouseNew]
                     np.delete(self.dInplay, posHouseNew)
-                    self.houseHandstr = 'House hand: ' + str(self.houseHand) + ' and ' + str(houseNew)
+                    self.houseHandstr = 'House hand: ' + str(self.houseHand) +\
+                        ' and ' + str(houseNew)
                     self.houseHand = self.houseHand + houseNew
                     print('Dealing card...')
                     print(self.houseHandstr)

@@ -1,5 +1,7 @@
 import numpy as np
 
+print('Hello World')
+
 L = [1, 2, 3]
 A = np.array([1, 2, 3])
 
@@ -24,4 +26,3 @@ Ap = A**2   # Same shit, a lot easier
 Asq = np.sqrt(A)
 Alog = np.log(A)
 Aexp = np.exp(A)
-
