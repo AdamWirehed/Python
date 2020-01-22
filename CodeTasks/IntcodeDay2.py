@@ -3,8 +3,7 @@
 
 def opcode(act, ix, arglist):
 
-    # Getting the values
-
+    # Getting the values depending on the instruction
     if act > 2:
         i1 = arglist[ix + 1]
         k = 2
@@ -14,6 +13,7 @@ def opcode(act, ix, arglist):
         i3 = arglist[ix + 3]
         k = 4
 
+    # The different operations
     def first():
         arglist[i3] = arglist[i1] + arglist[i2]
 
