@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e4cd7f9-c54b-4ef3-8b52-7fb6f9fb1d71" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Python Assignments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Python Assignments.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PythonExams" beforeDir="false" afterPath="$PROJECT_DIR$/../PythonExams" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../DataScience/DataScience_CourseMaterial/ConditionalProbabilityExercise.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../DataScience/DataScience_CourseMaterial/ConditionalProbabilityExercise.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../DataScience/DataScience_CourseMaterial/LinearRegression.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../DataScience/DataScience_CourseMaterial/LinearRegression.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,6 +283,7 @@
       <workItem from="1577096532972" duration="35000" />
       <workItem from="1577096586850" duration="717000" />
       <workItem from="1577097344641" duration="37000" />
+      <workItem from="1578779644225" duration="194000" />
     </task>
     <servers />
   </component>
