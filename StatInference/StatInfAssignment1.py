@@ -118,19 +118,18 @@ sampNorth = dfNorth.sample(round(float(propAllo[0])), random_state=0, replace=Tr
 sampEast = dfEast.sample(round(float(propAllo[1])), random_state=1, replace=True)
 sampSouth = dfSouth.sample(round(float(propAllo[2])), random_state=2, replace=True)
 sampWest = dfWest.sample(round(float(propAllo[3])), random_state=3, replace=True)
+sampWinds = pd.concat([sampNorth, sampEast, sampSouth, sampWest])
 
 xBarWinds = pNorth*sampNorth["'INCOME'"].mean() + pEast*sampEast["'INCOME'"].mean() + pSouth*sampSouth["'INCOME'"].mean() + pWest*sampWest["'INCOME'"].mean()
-stdWinds = pNorth*sampNorth["'INCOME'"].std() + pEast*sampEast["'INCOME'"].std() + pSouth*sampSouth["'INCOME'"].std() + pWest*sampWest["'INCOME'"].std()
-sWinds_xBar = stdWinds/m.sqrt(nWinds)
+sWinds_xBar = 1/nWinds * m.sqrt(m.pow(len(sampNorth), 2) * sampNorth["'INCOME'"].var()/len(sampNorth) + m.pow(len(sampEast), 2) * sampEast["'INCOME'"].var()/len(sampEast) + m.pow(len(sampSouth), 2) * sampSouth["'INCOME'"].var()/len(sampSouth) + m.pow(len(sampWest), 2) * sampWest["'INCOME'"].var()/len(sampWest))
 I_Winds_xBar = [xBarWinds - 1.96*sWinds_xBar, xBarWinds + 1.96*sWinds_xBar]
 
 print("Mean winds: {}".format(xBarWinds))
-print("Std winds: {}".format(stdWinds))
 print("Standard error winds: {}".format(sWinds_xBar))
 print("95% confidence interval 'Winds' sample: {} \n".format(I_Winds_xBar))
 
 
-samp500 = df.sample(n=nWinds, random_state=5, replace=True)
+samp500 = df.sample(n=nWinds, random_state=6, replace=True)
 xBar500 = samp500["'INCOME'"].mean()
 std500 = samp500["'INCOME'"].std()
 s500_xBar = std500/m.sqrt(nWinds)
@@ -158,5 +157,6 @@ plt.xlabel("Income")
 plt.ylabel("Observations")
 plt.plot(sorted(xBar100), sp.norm.pdf(sorted(xBar100), xBar100.mean(), xBar100.std()), '-r')
 plt.show()
+
 
 
