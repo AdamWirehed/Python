@@ -32,41 +32,58 @@ print("AlphaHat: {} \nLambdaHat: {} \n".format(alphaHat, lamHat))
 
 # Task c
 sampN = 100
-alphaSamp = np.zeros([sampN, 1])
-lamSamp = np.zeros([sampN, 1])
+aMME = np.zeros([sampN, 1])
+lamMME = np.zeros([sampN, 1])
+aMLE = np.zeros([sampN, 1])
+lamMLE = np.zeros([sampN, 1])
+
 for ix in range(0, sampN):
-    gamSample = sc.gamma.rvs(a=alphaHat, scale=1/lamHat, size=len(data), random_state=ix)
-    xBarSamp = gamSample.mean()
-    x2BarSamp = pow(gamSample, 2).mean()
-    alphaSamp[ix] = xBarSamp*xBarSamp/(x2BarSamp - xBarSamp*xBarSamp)
-    lamSamp[ix] = alphaSamp[ix]/xBarSamp
+    #Sampling from the different estimated gamma dist.
+    gSampMME = sc.gamma.rvs(a=alphaBar, scale=1/lamBar, size=len(data), random_state=ix)
+    gSampMLE = sc.gamma.rvs(a=alphaHat, scale=1/lamHat, size=len(data), random_state=ix)
 
-aBarSamp = alphaSamp.mean()
-lamBarSamp = lamSamp.mean()
+    xBarMME = gSampMME.mean()
+    x2BarMME = pow(gSampMME, 2).mean()
+    aMME[ix] = xBarMME*xBarMME/(x2BarMME - xBarMME*xBarMME)
+    lamMME[ix] = aMME[ix]/xBarMME
 
-saHat = m.sqrt(1/sampN*((alphaSamp - aBarSamp)*(alphaSamp - aBarSamp)).sum())
-slamHat = m.sqrt(1/sampN*((lamSamp - lamBarSamp)*(lamSamp - lamBarSamp)).sum())
+    xBarMLE = gSampMLE.mean()
+    x2BarMLE = pow(gSampMLE, 2).mean()
+    aMLE[ix] = xBarMLE * xBarMLE / (x2BarMLE - xBarMLE * xBarMLE)
+    lamMLE[ix] = aMLE[ix] / xBarMLE
 
-print("Standard error for alpha hat: {} \nStandard error for lambda hat: {} \n".format(saHat, slamHat))
 
-print("Alpha bar from est. gamDist: {} \nLambda bar from est. gamDist: {} \n".format(aBarSamp, lamBarSamp))
+aBarMME = aMME.mean()
+lamBarMME = lamMME.mean()
+aBarMLE = aMLE.mean()
+lamBarMLE = lamMLE.mean()
+
+
+saHatMME = m.sqrt(1/sampN*((aMME - aBarMME)*(aMME - aBarMME)).sum())
+slamHatMME = m.sqrt(1/sampN*((lamMME - lamBarMME)*(lamMME - lamBarMME)).sum())
+saHatMLE = m.sqrt(1/sampN*((aMLE - aBarMLE)*(aMLE - aBarMLE)).sum())
+slamHatMLE = m.sqrt(1/sampN*((lamMLE - lamBarMLE)*(lamMLE - lamBarMLE)).sum())
+
+print("Standard error for alpha hat(MME): {} \nStandard error for lambda hat(MME): {} \n".format(saHatMME, slamHatMME))
+print("Standard error for alpha hat(MLE): {} \nStandard error for lambda hat(MLE): {} \n".format(saHatMLE, slamHatMLE))
 
 sns.set()
 
 # a
 # Seems to follow the gamma distrubution fairly well where alpha=1 (shape parameter)
 plt.hist(data, bins=np.arange(min(data), max(data) + 10, 10), density=True, label="data")
-plt.plot(sorted(data), sc.gamma.pdf(sorted(data), a=alphaBar, scale=1/lamBar), '-r', label="Gamma dist. MME (a=~1, gam=0.1267)")
+plt.plot(sorted(data), sc.gamma.pdf(sorted(data), a=alphaBar, scale=1/lamBar), '-r', label="Gamma dist. MME (a={:.4}, gam={:.4})".format(alphaBar, lamBar))
+plt.plot(sorted(data), sc.gamma.pdf(sorted(data), a=alphaHat, scale=1/lamHat), '-g', label="Gamma dist. MLE (a={:.4}, gam={:.4})".format(alphaHat, lamHat))
 plt.title("Interarrivals times")
 plt.xlabel("time [s] (bin width = 10)")
 plt.ylabel("Occurances")
 plt.legend()
 plt.show()
 
-plt.hist(gamSample, bins=np.arange(min(data), max(data) + 10, 10), density=True, label="data")
-plt.plot(sorted(gamSample), sc.gamma.pdf(sorted(gamSample), a=alphaBar, scale=1/lamBar), '-r', label="Gamma dist. MME (a=~1, gam=0.1267)")
-plt.title("Interarrivals times, sampled from estimated Gamma dist.")
-plt.xlabel("time [s] (bin width = 10)")
-plt.ylabel("Occurances")
-plt.legend()
-plt.show()
+# plt.hist(gamSample, bins=np.arange(min(data), max(data) + 10, 10), density=True, label="data")
+# plt.plot(sorted(gamSample), sc.gamma.pdf(sorted(gamSample), a=alphaBar, scale=1/lamBar), '-r', label="Gamma dist. MME (a=~1, gam=0.1267)")
+# plt.title("Interarrivals times, sampled from estimated Gamma dist.")
+# plt.xlabel("time [s] (bin width = 10)")
+# plt.ylabel("Occurances")
+# plt.legend()
+# plt.show()
