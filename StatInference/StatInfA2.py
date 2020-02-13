@@ -37,6 +37,7 @@ lamMME = np.zeros([sampN, 1])
 aMLE = np.zeros([sampN, 1])
 lamMLE = np.zeros([sampN, 1])
 
+# Doing 100 simulated samples from a Gamma(alpha, lambda) dist based on the estimated parameters from MME and MLE
 for ix in range(0, sampN):
     #Sampling from the different estimated gamma dist.
     gSampMME = sc.gamma.rvs(a=alphaBar, scale=1/lamBar, size=len(data), random_state=ix)
@@ -67,6 +68,20 @@ slamHatMLE = m.sqrt(1/sampN*((lamMLE - lamBarMLE)*(lamMLE - lamBarMLE)).sum())
 print("Standard error for alpha hat(MME): {} \nStandard error for lambda hat(MME): {} \n".format(saHatMME, slamHatMME))
 print("Standard error for alpha hat(MLE): {} \nStandard error for lambda hat(MLE): {} \n".format(saHatMLE, slamHatMLE))
 
+
+#d
+
+I_saMME = [alphaBar - 1.96*saHatMME, alphaBar + 1.96*saHatMME]
+I_sLamMME = [lamBar - 1.96*slamHatMME, lamBarMME + 1.96*slamHatMME]
+
+I_saMLE = [alphaHat - 1.96*saHatMLE, alphaHat + 1.96*saHatMLE]
+I_sLamMLE = [lamHat - 1.96*slamHatMLE, lamHat + 1.96*slamHatMLE]
+
+print("Confidence interval (95%) alpha MME: {} \n".format(I_saMME))
+print("Confidence interval (95%) lambda MME: {} \n".format(I_sLamMME))
+print("Confidence interval (95%) alpha MLE: {} \n".format(I_saMLE))
+print("Confidence interval (95%) lambda MLE: {} \n".format(I_sLamMLE))
+
 sns.set()
 
 # a
@@ -80,10 +95,3 @@ plt.ylabel("Occurances")
 plt.legend()
 plt.show()
 
-# plt.hist(gamSample, bins=np.arange(min(data), max(data) + 10, 10), density=True, label="data")
-# plt.plot(sorted(gamSample), sc.gamma.pdf(sorted(gamSample), a=alphaBar, scale=1/lamBar), '-r', label="Gamma dist. MME (a=~1, gam=0.1267)")
-# plt.title("Interarrivals times, sampled from estimated Gamma dist.")
-# plt.xlabel("time [s] (bin width = 10)")
-# plt.ylabel("Occurances")
-# plt.legend()
-# plt.show()
