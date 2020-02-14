@@ -1,7 +1,5 @@
 import numpy as np
 import scipy.stats as sc
-import scipy.special as sp
-from scipy import optimize as opt
 import math as m
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -48,10 +46,14 @@ for ix in range(0, sampN):
     aMME[ix] = xBarMME*xBarMME/(x2BarMME - xBarMME*xBarMME)
     lamMME[ix] = aMME[ix]/xBarMME
 
-    xBarMLE = gSampMLE.mean()
-    x2BarMLE = pow(gSampMLE, 2).mean()
-    aMLE[ix] = xBarMLE * xBarMLE / (x2BarMLE - xBarMLE * xBarMLE)
-    lamMLE[ix] = aMLE[ix] / xBarMLE
+    # Wrong here? Just use fit instead
+    # xBarMLE = gSampMLE.mean()
+    # x2BarMLE = pow(gSampMLE, 2).mean()
+    # aMLE[ix] = xBarMLE * xBarMLE / (x2BarMLE - xBarMLE * xBarMLE)
+    # lamMLE[ix] = aMLE[ix] / xBarMLE
+    MLEsamp = sc.gamma.fit(gSampMLE, floc=0)
+    aMLE[ix] = MLEsamp[0]
+    lamMLE[ix] = 1/MLEsamp[2]
 
 
 aBarMME = aMME.mean()
