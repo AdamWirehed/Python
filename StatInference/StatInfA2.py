@@ -46,11 +46,6 @@ for ix in range(0, sampN):
     aMME[ix] = xBarMME*xBarMME/(x2BarMME - xBarMME*xBarMME)
     lamMME[ix] = aMME[ix]/xBarMME
 
-    # Wrong here? Just use fit instead
-    # xBarMLE = gSampMLE.mean()
-    # x2BarMLE = pow(gSampMLE, 2).mean()
-    # aMLE[ix] = xBarMLE * xBarMLE / (x2BarMLE - xBarMLE * xBarMLE)
-    # lamMLE[ix] = aMLE[ix] / xBarMLE
     MLEsamp = sc.gamma.fit(gSampMLE, floc=0)
     aMLE[ix] = MLEsamp[0]
     lamMLE[ix] = 1/MLEsamp[2]
@@ -70,8 +65,7 @@ slamHatMLE = m.sqrt(1/sampN*((lamMLE - lamBarMLE)*(lamMLE - lamBarMLE)).sum())
 print("Standard error for alpha hat(MME): {} \nStandard error for lambda hat(MME): {} \n".format(saHatMME, slamHatMME))
 print("Standard error for alpha hat(MLE): {} \nStandard error for lambda hat(MLE): {} \n".format(saHatMLE, slamHatMLE))
 
-
-#d
+# d
 
 I_saMME = [alphaBar - 1.96*saHatMME, alphaBar + 1.96*saHatMME]
 I_sLamMME = [lamBar - 1.96*slamHatMME, lamBarMME + 1.96*slamHatMME]
