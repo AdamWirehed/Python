@@ -23,6 +23,8 @@ s2Female = dfFemale["temperature"].var()
 SE_xy = m.sqrt(s2Male/len(dfMale) + s2Female/len(dfFemale))
 I_normal = [xyBar - 1.96*SE_xy, xyBar + 1.96*SE_xy]
 
+print("Mean xyBar: {}\n".format(xyBar))
+print("SE xy: {}".format(SE_xy))
 print("Confidence interval (95%, normal): {}\n".format(I_normal))
 
 # task ii - parametric test (assuming normal dist.) = two sample t-test
@@ -30,11 +32,11 @@ print("Confidence interval (95%, normal): {}\n".format(I_normal))
 totSize = len(dfMale) + len(dfFemale)
 s2Pooled = (len(dfMale) - 1)/(totSize - 2)*s2Male + (len(dfFemale) - 1)/(totSize - 2)*s2Female
 degF = totSize - 2
-t_obs = xyBar/m.sqrt(s2Pooled) * m.sqrt(totSize/(len(dfMale) * len(dfFemale)))
+t_obs = xyBar/m.sqrt(s2Pooled) * m.sqrt((len(dfMale) * len(dfFemale))/totSize)
 
 print("t-value: {}".format(t_obs))
 print("Df: {}".format(degF))
-print("p-value: {} = Not significant \n".format(stats.t.pdf(t_obs, degF)))
+print("p-value: {}\n".format(stats.t.cdf(t_obs, degF)))
 
 
 # task iii, Rank sum test
@@ -56,15 +58,19 @@ for index, row in dfRanked.iterrows():
 
 print("Rank sum male: {}".format(sumMale))
 print("Rank sum female: {}".format(sumFemale))
-print("Fraction male sample vs female sample: {}".format(len(dfMale)/len(dfFemale)))
-print("Normalized rank sum male: {}".format(sumMale * 1/(sumMale + sumFemale) * 20*(20+1)/2))
-print("Normalized rank sum female: {}".format(sumFemale * 1/(sumMale + sumFemale) * 20*(20+1)/2))
-print("Rank sum for males and females is not lower or higher than their bounds, Tl = 79, Tu = 131. Accept H0\n")
 
-# print(sumMale)
-# print(sumFemale)
-# print(sumMale + sumFemale)
-# print((len(dfMale) + len(dfFemale)) * (len(dfMale) + len(dfFemale) + 1)/2)
+
+Er1 = len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/2
+Er2 = Er1
+VarR = len(dfFemale)*len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/12
+
+pMale = stats.norm.cdf(sumMale, loc=Er1, scale=m.sqrt(VarR))
+pFemale = stats.norm.cdf(sumFemale, loc=Er2, scale=m.sqrt(VarR))
+
+print("Expected rank sum of Male: {}".format(Er1))
+print("Expected rank sum of Female: {}".format(Er2))
+print("P-value for rank sum test male: {}".format(pMale))
+print("P-value for rank sum test female: {}\n".format(pFemale))
 
 
 # task b, i
@@ -77,19 +83,20 @@ s2FemaleRate = dfFemale["rate"].var()
 SE_xyRate = m.sqrt(s2MaleRate/len(dfMale) + s2FemaleRate/len(dfFemale))
 I_normalRate = [xyBarRate - 1.96*SE_xyRate, xyBarRate + 1.96*SE_xyRate]
 
+print("Mean xyBar: {}".format(xyBarRate))
+print("SE xy: {}".format(SE_xyRate))
 print("Confidence interval (95%, normal): {}\n".format(I_normalRate))
-
 
 # b,ii - parametric test, two sample t-test
 
 totSize = len(dfMale) + len(dfFemale)
 s2PooledRate = (len(dfMale) - 1)/(totSize - 2)*s2MaleRate + (len(dfFemale) - 1)/(totSize - 2)*s2FemaleRate
 degF = totSize - 2
-t_obsRate = xyBarRate/m.sqrt(s2PooledRate) * m.sqrt(totSize/(len(dfMale) * len(dfFemale)))
+t_obsRate = xyBarRate/m.sqrt(s2PooledRate) * m.sqrt((len(dfMale) * len(dfFemale))/totSize)
 
-print("t-value: {}".format(t_obs))
+print("t-value: {}".format(t_obsRate))
 print("Df: {}".format(degF))
-print("p-value: {} = Not significant \n".format(stats.t.pdf(t_obsRate, degF)))
+print("p-value: {}\n".format(stats.t.cdf(t_obsRate, degF)))
 
 dfRankedRate = df
 dfRankedRate = dfRanked.sort_values('rate')
@@ -109,11 +116,14 @@ for index, row in dfRankedRate.iterrows():
 
 print("Rank sum male: {}".format(sumMaleRate))
 print("Rank sum female: {}".format(sumFemaleRate))
-print("Fraction male sample vs female sample: {}".format(len(dfMale)/len(dfFemale)))
-print("Normalized rank sum male: {}".format(sumMaleRate * 1/(sumMaleRate + sumFemaleRate) * 20*(20+1)/2))
-print("Normalized rank sum female: {}".format(sumFemaleRate * 1/(sumMaleRate + sumFemaleRate) * 20*(20+1)/2))
-print("Rank sum for males and females is not lower or higher than their bounds, Tl = 79, Tu = 131. Accept H0\n")
 
+pMaleRate = stats.norm.cdf(sumMaleRate, loc=Er1, scale=m.sqrt(VarR))
+pFemaleRate = stats.norm.cdf(sumFemaleRate, loc=Er2, scale=m.sqrt(VarR))
+
+print("Expected rank sum of Male: {}".format(Er1))
+print("Expected rank sum of Female: {}".format(Er2))
+print("P-value for rank sum test male (rate): {}".format(pMaleRate))
+print("P-value for rank sum test female (rate): {}".format(pFemaleRate))
 
 sns.set()
 
