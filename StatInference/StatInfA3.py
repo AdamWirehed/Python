@@ -76,10 +76,24 @@ sns.set()
 
 measurements = dfMale["temperature"]
 stats.probplot(measurements, dist="norm", plot=pylab)
-plt.title("QQ-plot for temperature")
+plt.title("Normal probability plot for male temperature")
+plt.savefig("Figures/QQ_MaleTemp")
 pylab.show()
 
 measurements = dfMale["rate"]
 stats.probplot(measurements, dist="norm", plot=pylab)
-plt.title("QQ-plot for heart rate")
+plt.title("Normal probability plot for male heart rate")
+plt.savefig("Figures/QQ_MaleRate")
+pylab.show()
+
+measurements = dfFemale["temperature"]
+stats.probplot(measurements, dist="norm", plot=pylab)
+plt.title("Normal probability plot for female temperature")
+plt.savefig("Figures/QQ_FemaleTemp")
+pylab.show()
+
+measurements = dfFemale["rate"]
+stats.probplot(measurements, dist="norm", plot=pylab)
+plt.title("Normal probability plot for female heart rate")
+plt.savefig("Figures/QQ_FemaleRate")
 pylab.show()
