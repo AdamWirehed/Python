@@ -36,7 +36,8 @@ t_obs = xyBar/m.sqrt(s2Pooled) * m.sqrt((len(dfMale) * len(dfFemale))/totSize)
 
 print("t-value: {}".format(t_obs))
 print("Df: {}".format(degF))
-print("p-value: {}\n".format(stats.t.cdf(t_obs, degF)))
+print("p-value: {}\n".format(2*(1 - stats.t.cdf(abs(t_obs), degF))))
+print(stats.ttest_ind(dfMale["temperature"], dfFemale["temperature"]))
 
 
 # task iii, Rank sum test
@@ -63,15 +64,18 @@ print("Rank sum female: {}".format(sumFemale))
 Er1 = len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/2
 Er2 = Er1
 VarR = len(dfFemale)*len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/12
+stdR = m.sqrt(VarR)
+zMale = (sumMale - Er1)/stdR
+zFemale = (sumFemale - Er1)/stdR
 
-pMale = stats.norm.cdf(sumMale, loc=Er1, scale=m.sqrt(VarR))
-pFemale = stats.norm.cdf(sumFemale, loc=Er2, scale=m.sqrt(VarR))
+pMale = 2*(1 - stats.norm.cdf(abs(zMale), loc=0, scale=1))
+pFemale = 2*(1 - stats.norm.cdf(abs(zFemale), loc=0, scale=1))
 
 print("Expected rank sum of Male: {}".format(Er1))
 print("Expected rank sum of Female: {}".format(Er2))
 print("P-value for rank sum test male: {}".format(pMale))
 print("P-value for rank sum test female: {}\n".format(pFemale))
-
+print(stats.wilcoxon(dfMale["temperature"], dfFemale["temperature"]))
 
 # task b, i
 
@@ -96,7 +100,8 @@ t_obsRate = xyBarRate/m.sqrt(s2PooledRate) * m.sqrt((len(dfMale) * len(dfFemale)
 
 print("t-value: {}".format(t_obsRate))
 print("Df: {}".format(degF))
-print("p-value: {}\n".format(stats.t.cdf(t_obsRate, degF)))
+print("p-value: {}\n".format(2*(1 - stats.t.cdf(abs(t_obsRate), degF))))
+print(stats.ttest_ind(dfMale["rate"], dfFemale["rate"]))
 
 dfRankedRate = df
 dfRankedRate = dfRanked.sort_values('rate')
@@ -117,13 +122,18 @@ for index, row in dfRankedRate.iterrows():
 print("Rank sum male: {}".format(sumMaleRate))
 print("Rank sum female: {}".format(sumFemaleRate))
 
-pMaleRate = stats.norm.cdf(sumMaleRate, loc=Er1, scale=m.sqrt(VarR))
-pFemaleRate = stats.norm.cdf(sumFemaleRate, loc=Er2, scale=m.sqrt(VarR))
+zMaleRate = (sumMaleRate - Er1)/stdR
+zFemaleRate = (sumFemaleRate - Er1)/stdR
+
+pMaleRate = 2*(1 - stats.norm.cdf(abs(zMaleRate), loc=0, scale=1))
+pFemaleRate = 2*(1 - stats.norm.cdf(abs(zFemaleRate), loc=0, scale=1))
 
 print("Expected rank sum of Male: {}".format(Er1))
 print("Expected rank sum of Female: {}".format(Er2))
+print("Variance rank sum: {}".format(VarR))
 print("P-value for rank sum test male (rate): {}".format(pMaleRate))
 print("P-value for rank sum test female (rate): {}".format(pFemaleRate))
+print(stats.wilcoxon(dfMale["rate"], dfFemale["rate"]))
 
 sns.set()
 
