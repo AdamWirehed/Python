@@ -41,41 +41,8 @@ print(stats.ttest_ind(dfMale["temperature"], dfFemale["temperature"]))
 
 
 # task iii, Rank sum test
-dfRanked = df
-dfRanked = dfRanked.sort_values('temperature')
 
-sumMale = 0
-sumFemale = 0
-rank = 0
-
-for index, row in dfRanked.iterrows():
-    if row["gender"] == 1:
-        sumMale += (rank + 1)
-    elif row["gender"] == 2:
-        sumFemale += (rank + 1)
-    else:
-        print("Data at index {} is weird \n".format(index))
-    rank += 1
-
-print("Rank sum male: {}".format(sumMale))
-print("Rank sum female: {}".format(sumFemale))
-
-
-Er1 = len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/2
-Er2 = Er1
-VarR = len(dfFemale)*len(dfMale)*(len(dfMale) + len(dfFemale) + 1)/12
-stdR = m.sqrt(VarR)
-zMale = (sumMale - Er1)/stdR
-zFemale = (sumFemale - Er1)/stdR
-
-pMale = 2*(1 - stats.norm.cdf(abs(zMale), loc=0, scale=1))
-pFemale = 2*(1 - stats.norm.cdf(abs(zFemale), loc=0, scale=1))
-
-print("Expected rank sum of Male: {}".format(Er1))
-print("Expected rank sum of Female: {}".format(Er2))
-print("P-value for rank sum test male: {}".format(pMale))
-print("P-value for rank sum test female: {}\n".format(pFemale))
-print(stats.wilcoxon(dfMale["temperature"], dfFemale["temperature"]))
+print(stats.ranksums(dfMale["temperature"], dfFemale["temperature"]))
 
 # task b, i
 
@@ -103,37 +70,7 @@ print("Df: {}".format(degF))
 print("p-value: {}\n".format(2*(1 - stats.t.cdf(abs(t_obsRate), degF))))
 print(stats.ttest_ind(dfMale["rate"], dfFemale["rate"]))
 
-dfRankedRate = df
-dfRankedRate = dfRanked.sort_values('rate')
-
-sumMaleRate = 0
-sumFemaleRate = 0
-rank = 1
-
-for index, row in dfRankedRate.iterrows():
-    if row["gender"] == 1:
-        sumMaleRate += (rank + 1)
-    elif row["gender"] == 2:
-        sumFemaleRate += (rank + 1)
-    else:
-        print("Data at index {} is weird \n".format(index))
-    rank += 1
-
-print("Rank sum male: {}".format(sumMaleRate))
-print("Rank sum female: {}".format(sumFemaleRate))
-
-zMaleRate = (sumMaleRate - Er1)/stdR
-zFemaleRate = (sumFemaleRate - Er1)/stdR
-
-pMaleRate = 2*(1 - stats.norm.cdf(abs(zMaleRate), loc=0, scale=1))
-pFemaleRate = 2*(1 - stats.norm.cdf(abs(zFemaleRate), loc=0, scale=1))
-
-print("Expected rank sum of Male: {}".format(Er1))
-print("Expected rank sum of Female: {}".format(Er2))
-print("Variance rank sum: {}".format(VarR))
-print("P-value for rank sum test male (rate): {}".format(pMaleRate))
-print("P-value for rank sum test female (rate): {}".format(pFemaleRate))
-print(stats.wilcoxon(dfMale["rate"], dfFemale["rate"]))
+print(stats.ranksums(dfMale["rate"], dfFemale["rate"]))
 
 sns.set()
 
