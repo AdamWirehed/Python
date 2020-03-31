@@ -9,21 +9,23 @@ import seaborn as sns
 
 ## Variables
 pathData = "/Users/adamwirehed/Documents/GitHub/Rdatasets/csv"
+df = pd.read_csv(pathData + "/carData/Ginzberg.csv")
+expl = 'simplicity'
+tar = 'depression'
 
 
 ## Depression dataset split
-dfDep = pd.read_csv(pathData + "/carData/Ginzberg.csv")
 n_splits = 5
 kf = KFold(n_splits=n_splits, shuffle=True)
-ix_train, ix_test = next(kf.split(dfDep), None)
-dfTrain = dfDep.iloc[ix_train]
-dfTest = dfDep.iloc[ix_test]
-xTrain = dfTrain['simplicity'].values
+ix_train, ix_test = next(kf.split(df), None)
+dfTrain = df.iloc[ix_train]
+dfTest = df.iloc[ix_test]
+xTrain = dfTrain[expl].values
 xTrain = xTrain.reshape(len(dfTrain), 1)
-yTrain = dfTrain['depression'].values
+yTrain = dfTrain[tar].values
 yTrain = yTrain.reshape(len(dfTrain), 1)
-xTest = (dfTest['simplicity'].values).reshape(len(dfTest), 1)
-yTest = (dfTest['depression'].values).reshape(len(dfTest), 1)
+xTest = (dfTest[expl].values).reshape(len(dfTest), 1)
+yTest = (dfTest[tar].values).reshape(len(dfTest), 1)
 
 # Linear regression
 lin_regDep = kit.LinearRegression()
@@ -37,21 +39,17 @@ kNN_regDep.fit(xTrain, yTrain)
 kNN_test = kNN.KNeighborsRegressor(n_neighbors=k)
 
 # Cross-validation
-TE_Dep_lin = sum(yTest - lin_regDep.predict(xTest))
-TE_Dep_kNN = sum(yTest - kNN_regDep.predict(xTest))
+data = (df[expl].values).reshape(len(df), 1)
+target = (df[tar].values).reshape(len(df), 1)
+lin_reg = mod.cross_validate(lin_test, data, target, cv=4, return_train_score=True, return_estimator=True)
+kNN_reg = mod.cross_validate(kNN_test, data, target, cv=4, return_train_score=True, return_estimator=True)
 
-print("Test error linear: {}".format(TE_Dep_lin))
-print("Test error kNN: {}".format(TE_Dep_kNN))
-
-""" cv = mod.ShuffleSplit(n_splits=1, test_size=0.2)
-lin_reg = mod.cross_validate(lin_test, xDep, yDep, cv=cv)
-kNN_reg = mod.cross_validate(kNN_test, xDep, yDep, cv=cv)
-print(lin_cval['test_score'])
-print(kNN_cval['test_score']) """
+print(lin_reg['test_score'])
+print(kNN_reg['test_score'])
 
 sns.set()
 plt.scatter(xTrain, yTrain, color='red', label='Data points (training)')
-plt.plot(xTrain, lin_regDep.predict(xTrain), color='blue', label='Linear regression')
+plt.plot(xTrain, lin_reg['estimator'][1].predict(xTrain), color='blue', label='Linear regression')
 plt.plot(sorted(xTrain), kNN_regDep.predict(sorted(xTrain)), color='green', label='k-neighbors (k={})'.format(k))
 plt.xlabel("Simplicity - Measures subject's need to see the world in black and white")
 plt.ylabel("Depression (Beck)")
@@ -63,7 +61,7 @@ plt.show()
 
 plt.scatter(xTest, yTest, color='red', label='Data points (test)')
 plt.plot(xTest, lin_regDep.predict(xTest), color='blue', label='Linear regression')
-plt.plot(sorted(xTest), kNN_regDep.predict(sorted(xTest)), color='green', label='k-neighbors (k={})'.format(k))
+plt.plot(sorted(xTest), kNN_reg['estimator'][1].predict(sorted(xTest)), color='green', label='k-neighbors (k={})'.format(k))
 plt.xlabel("Simplicity - Measures subject's need to see the world in black and white")
 plt.ylabel("Depression (Beck)")
 plt.title("Regression on simplicity and depression")
