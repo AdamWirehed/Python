@@ -46,15 +46,27 @@ def plot_contours(ax, clf, xx, yy, **params):
 
 # ----------------------------------------------------------------------
 
+## Datasets
+
+# /datasets/iris.csv    Petal.Length, Petal.Width | Species
+# /DAAG/toycars.csv     angle, distance           | car
+# /vcd/Hitters.csv      Errors, Putouts           | Positions
+# /vcd/Suicide.csv      age, method               | sex
+
 ## Variables
+dataset = "/DAAG/toycars.csv"
 pathData = "/Users/adamwirehed/Documents/GitHub/Rdatasets/csv"
-df = pd.read_csv(pathData + "/DAAG/toycars.csv")
+df = pd.read_csv(pathData + dataset)
 expl = ['angle', 'distance']
 tar = ['car']
-X = (df[expl].values).reshape(len(df), len(expl))
-#Y = pd.factorize(df.Species)[0]
-Y = np.ravel(df[tar].values)
-print(Y)
+
+X = df[expl].values.reshape(len(df), len(expl))
+
+if type(df[tar].values[0][0]) == np.int64:
+    Y = np.ravel(df[tar].values)
+else:
+    Y = pd.factorize(np.ravel(df[tar].values))[0]
+
 
 # Logistic regression
 log_reg = kit.LogisticRegression(random_state=0).fit(X, Y)
@@ -77,7 +89,7 @@ qda_reg.fit(X, Y)
 qda_test = disc.QuadraticDiscriminantAnalysis()
 
 # Cross-validation
-cv = mod.KFold(n_splits=5, shuffle=True)
+cv = mod.StratifiedKFold(n_splits=5, shuffle=True)
 log_result = mod.cross_validate(log_test, X, Y, cv=cv)
 kNN_result = mod.cross_validate(kNN_test, X, Y, cv=cv)
 lda_result = mod.cross_validate(lda_test, X, Y, cv=cv)
@@ -88,36 +100,21 @@ print(kNN_result['test_score'].mean())
 print(lda_result['test_score'].mean())
 print(qda_result['test_score'].mean())
 
-
 sns.set()
 fig, sub = plt.subplots(2,2)
 plt.subplots_adjust(wspace=0.6, hspace=0.6)
 xx, yy = make_meshgrid(X[:,0], X[:,1])
+titles = ['Logistic', "kNN (k={})".format(k), 'LDA', 'QDA']
+models = [log_reg, kNN_reg, lda_reg, qda_reg]
 
-plot_contours(sub[0, 0], log_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
-sub[0, 0].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
-sub[0, 0].set_xlabel(expl[0])
-sub[0, 0].set_ylabel(expl[1])
-sub[0, 0].set_title("Logistic")
+for model, title, ax in zip(models, titles, sub.flatten()):
+    plot_contours(ax, model, xx, yy, cmap=cm.Set3, alpha=0.8)
+    ax.scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
+    ax.set_xlabel(expl[0])
+    ax.set_ylabel(expl[1])
+    ax.set_title(title)
 
-plot_contours(sub[0, 1], kNN_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
-sub[0, 1].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
-sub[0, 1].set_xlabel(expl[0])
-sub[0, 1].set_ylabel(expl[1])
-sub[0, 1].set_title("kNN (k={})".format(k))
-
-
-plot_contours(sub[1, 0], lda_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
-sub[1, 0].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
-sub[1, 0].set_xlabel(expl[0])
-sub[1, 0].set_ylabel(expl[1])
-sub[1, 0].set_title("LDA")
-
-plot_contours(sub[1, 1], qda_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
-sub[1, 1].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
-sub[1, 1].set_xlabel(expl[0])
-sub[1, 1].set_ylabel(expl[1])
-sub[1, 1].set_title("QDA")
-
-plt.savefig("Figures/Toycars.png")
+filename = dataset.replace('.csv', '').split('/')[-1] + ".png"
+plt.savefig("Figures/" + filename)
+print(filename)
 plt.show()
