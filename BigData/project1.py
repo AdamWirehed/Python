@@ -2,70 +2,122 @@ import numpy as np
 import pandas as pd
 import sklearn.linear_model as kit
 import sklearn.neighbors as kNN
-from sklearn.model_selection import KFold
+import sklearn.discriminant_analysis as disc
 import sklearn.model_selection as mod
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import seaborn as sns
+
+def make_meshgrid(x, y, h=.02):
+    """Create a mesh of points to plot in
+
+    Parameters
+    ----------
+    x: data to base x-axis meshgrid on
+    y: data to base y-axis meshgrid on
+    h: stepsize for meshgrid, optional
+
+    Returns
+    -------
+    xx, yy : ndarray
+    """
+    x_min, x_max = x.min() - 1, x.max() + 1
+    y_min, y_max = y.min() - 1, y.max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    return xx, yy
+
+
+def plot_contours(ax, clf, xx, yy, **params):
+    """Plot the decision boundaries for a classifier.
+
+    Parameters
+    ----------
+    ax: matplotlib axes object
+    clf: a classifier
+    xx: meshgrid ndarray
+    yy: meshgrid ndarray
+    params: dictionary of params to pass to contourf, optional
+    """
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    out = ax.contourf(xx, yy, Z, **params)
+    return out
+
+# ----------------------------------------------------------------------
 
 ## Variables
 pathData = "/Users/adamwirehed/Documents/GitHub/Rdatasets/csv"
-df = pd.read_csv(pathData + "/carData/Ginzberg.csv")
-expl = 'simplicity'
-tar = 'depression'
+df = pd.read_csv(pathData + "/DAAG/toycars.csv")
+expl = ['angle', 'distance']
+tar = ['car']
+X = (df[expl].values).reshape(len(df), len(expl))
+#Y = pd.factorize(df.Species)[0]
+Y = np.ravel(df[tar].values)
+print(Y)
 
-
-## Depression dataset split
-n_splits = 5
-kf = KFold(n_splits=n_splits, shuffle=True)
-ix_train, ix_test = next(kf.split(df), None)
-dfTrain = df.iloc[ix_train]
-dfTest = df.iloc[ix_test]
-xTrain = dfTrain[expl].values
-xTrain = xTrain.reshape(len(dfTrain), 1)
-yTrain = dfTrain[tar].values
-yTrain = yTrain.reshape(len(dfTrain), 1)
-xTest = (dfTest[expl].values).reshape(len(dfTest), 1)
-yTest = (dfTest[tar].values).reshape(len(dfTest), 1)
-
-# Linear regression
-lin_regDep = kit.LinearRegression()
-lin_regDep.fit(xTrain, yTrain)
-lin_test = kit.LinearRegression()
+# Logistic regression
+log_reg = kit.LogisticRegression(random_state=0).fit(X, Y)
+log_test = kit.LogisticRegression()
 
 # k-neighbors
 k = 8
-kNN_regDep = kNN.KNeighborsRegressor(n_neighbors=k)
-kNN_regDep.fit(xTrain, yTrain)
-kNN_test = kNN.KNeighborsRegressor(n_neighbors=k)
+kNN_reg = kNN.KNeighborsClassifier(n_neighbors=k)
+kNN_reg.fit(X, Y)
+kNN_test = kNN.KNeighborsClassifier(n_neighbors=k)
+
+# Linear discirimant Analysis
+lda_reg = disc.LinearDiscriminantAnalysis()
+lda_reg.fit(X, Y)
+lda_test = disc.LinearDiscriminantAnalysis()
+
+# Qudratic discriminat analysis
+qda_reg = disc.QuadraticDiscriminantAnalysis()
+qda_reg.fit(X, Y)
+qda_test = disc.QuadraticDiscriminantAnalysis()
 
 # Cross-validation
-data = (df[expl].values).reshape(len(df), 1)
-target = (df[tar].values).reshape(len(df), 1)
-lin_reg = mod.cross_validate(lin_test, data, target, cv=4, return_train_score=True, return_estimator=True)
-kNN_reg = mod.cross_validate(kNN_test, data, target, cv=4, return_train_score=True, return_estimator=True)
+cv = mod.KFold(n_splits=5, shuffle=True)
+log_result = mod.cross_validate(log_test, X, Y, cv=cv)
+kNN_result = mod.cross_validate(kNN_test, X, Y, cv=cv)
+lda_result = mod.cross_validate(lda_test, X, Y, cv=cv)
+qda_result = mod.cross_validate(qda_test, X, Y, cv=cv)
 
-print(lin_reg['test_score'])
-print(kNN_reg['test_score'])
+print(log_result['test_score'].mean())
+print(kNN_result['test_score'].mean())
+print(lda_result['test_score'].mean())
+print(qda_result['test_score'].mean())
+
 
 sns.set()
-plt.scatter(xTrain, yTrain, color='red', label='Data points (training)')
-plt.plot(xTrain, lin_reg['estimator'][1].predict(xTrain), color='blue', label='Linear regression')
-plt.plot(sorted(xTrain), kNN_regDep.predict(sorted(xTrain)), color='green', label='k-neighbors (k={})'.format(k))
-plt.xlabel("Simplicity - Measures subject's need to see the world in black and white")
-plt.ylabel("Depression (Beck)")
-plt.title("Regression on simplicity and depression")
-plt.legend()
-plt.savefig("Figures/depression.png")
+fig, sub = plt.subplots(2,2)
+plt.subplots_adjust(wspace=0.6, hspace=0.6)
+xx, yy = make_meshgrid(X[:,0], X[:,1])
+
+plot_contours(sub[0, 0], log_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
+sub[0, 0].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
+sub[0, 0].set_xlabel(expl[0])
+sub[0, 0].set_ylabel(expl[1])
+sub[0, 0].set_title("Logistic")
+
+plot_contours(sub[0, 1], kNN_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
+sub[0, 1].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
+sub[0, 1].set_xlabel(expl[0])
+sub[0, 1].set_ylabel(expl[1])
+sub[0, 1].set_title("kNN (k={})".format(k))
+
+
+plot_contours(sub[1, 0], lda_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
+sub[1, 0].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
+sub[1, 0].set_xlabel(expl[0])
+sub[1, 0].set_ylabel(expl[1])
+sub[1, 0].set_title("LDA")
+
+plot_contours(sub[1, 1], qda_reg, xx, yy, cmap=cm.Set3, alpha=0.8)
+sub[1, 1].scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
+sub[1, 1].set_xlabel(expl[0])
+sub[1, 1].set_ylabel(expl[1])
+sub[1, 1].set_title("QDA")
+
+plt.savefig("Figures/Toycars.png")
 plt.show()
-
-
-plt.scatter(xTest, yTest, color='red', label='Data points (test)')
-plt.plot(xTest, lin_regDep.predict(xTest), color='blue', label='Linear regression')
-plt.plot(sorted(xTest), kNN_reg['estimator'][1].predict(sorted(xTest)), color='green', label='k-neighbors (k={})'.format(k))
-plt.xlabel("Simplicity - Measures subject's need to see the world in black and white")
-plt.ylabel("Depression (Beck)")
-plt.title("Regression on simplicity and depression")
-plt.legend()
-plt.savefig("Figures/depression.png")
-plt.show()
-
