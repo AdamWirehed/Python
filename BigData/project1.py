@@ -4,9 +4,11 @@ import sklearn.linear_model as kit
 import sklearn.neighbors as kNN
 import sklearn.discriminant_analysis as disc
 import sklearn.model_selection as mod
+from sklearn import preprocessing
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import seaborn as sns
+from sklearn.datasets import load_digits
 
 def make_meshgrid(x, y, h=.02):
     """Create a mesh of points to plot in
@@ -50,8 +52,10 @@ def plot_contours(ax, clf, xx, yy, **params):
 
 # /datasets/iris.csv    Petal.Length, Petal.Width | Species
 # /DAAG/toycars.csv     angle, distance           | car
-# /vcd/Hitters.csv      Errors, Putouts           | Positions
+# /DAAG/leafshape.csv   bladelen, bladewid        | location    
 # /vcd/Suicide.csv      age, method               | sex
+# /datasets/OrchardSprays.csv   decrease, rowpos      | treatment
+# /DAAG/ais.csv         rcc, wt                   | sport
 
 ## Variables
 dataset = "/DAAG/toycars.csv"
@@ -61,19 +65,19 @@ expl = ['angle', 'distance']
 tar = ['car']
 
 X = df[expl].values.reshape(len(df), len(expl))
+X = preprocessing.scale(X)
 
 if type(df[tar].values[0][0]) == np.int64:
     Y = np.ravel(df[tar].values)
 else:
     Y = pd.factorize(np.ravel(df[tar].values))[0]
 
-
 # Logistic regression
-log_reg = kit.LogisticRegression(random_state=0).fit(X, Y)
+log_reg = kit.LogisticRegression().fit(X, Y)
 log_test = kit.LogisticRegression()
 
 # k-neighbors
-k = 8
+k = 5
 kNN_reg = kNN.KNeighborsClassifier(n_neighbors=k)
 kNN_reg.fit(X, Y)
 kNN_test = kNN.KNeighborsClassifier(n_neighbors=k)
@@ -110,11 +114,28 @@ models = [log_reg, kNN_reg, lda_reg, qda_reg]
 for model, title, ax in zip(models, titles, sub.flatten()):
     plot_contours(ax, model, xx, yy, cmap=cm.Set3, alpha=0.8)
     ax.scatter(X[:,0], X[:,1], c=Y, cmap=cm.Set3, s=20, edgecolors='k')
-    ax.set_xlabel(expl[0])
-    ax.set_ylabel(expl[1])
+    ax.set_xlabel(expl[0] + " (PC1)")
+    ax.set_ylabel(expl[1] + " (PC2)")
     ax.set_title(title)
 
 filename = dataset.replace('.csv', '').split('/')[-1] + ".png"
 plt.savefig("Figures/" + filename)
 print(filename)
 plt.show()
+
+digits = load_digits()
+X = preprocessing.scale(digits.data)
+Y = digits.target
+
+cv = mod.StratifiedKFold(n_splits=5, shuffle=True)
+log_result = mod.cross_validate(log_test, X, Y, cv=cv)
+kNN_result = mod.cross_validate(kNN_test, X, Y, cv=cv)
+lda_result = mod.cross_validate(lda_test, X, Y, cv=cv)
+qda_result = mod.cross_validate(qda_test, X, Y, cv=cv)
+
+print(log_result['test_score'].mean())
+print(kNN_result['test_score'].mean())
+print(lda_result['test_score'].mean())
+print(qda_result['test_score'].mean())
+
+print(X.shape)
