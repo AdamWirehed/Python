@@ -63,6 +63,8 @@ pathData = "/Users/adamwirehed/Documents/GitHub/Rdatasets/csv"
 df = pd.read_csv(pathData + dataset)
 expl = ['angle', 'distance']
 tar = ['car']
+print(len(df))
+print(df['angle'].value_counts())
 
 X = df[expl].values.reshape(len(df), len(expl))
 X = preprocessing.scale(X)
@@ -127,6 +129,8 @@ digits = load_digits()
 X = preprocessing.scale(digits.data)
 Y = digits.target
 
+print(digits)
+
 cv = mod.StratifiedKFold(n_splits=5, shuffle=True)
 log_result = mod.cross_validate(log_test, X, Y, cv=cv)
 kNN_result = mod.cross_validate(kNN_test, X, Y, cv=cv)
@@ -138,4 +142,3 @@ print(kNN_result['test_score'].mean())
 print(lda_result['test_score'].mean())
 print(qda_result['test_score'].mean())
 
-print(X.shape)
