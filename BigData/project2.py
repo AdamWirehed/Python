@@ -17,7 +17,7 @@ NCLUSTCLASS = 1
 
 nUnrelated = NFEAT - NINFO - NRED - NREP
 
-[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=10, shuffle=False)
+[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=5, shuffle=False)
 
 nUseful = NINFO + NRED + NREP
 print("Useful features: first {}".format(NINFO))
@@ -45,21 +45,40 @@ fig.suptitle("Univariant Histogram of features across data")
 plt.show()
 
 
-NFEAT = 8
-NINFO = 2
+NFEAT = 120
+NINFO = 4
 NRED = 0
 NREP = 0
-NCLASS = 4
+NCLASS = 5
 NCLUSTCLASS = 1
 
+uFeat = []
+scoreKM = []
+scoreHier = []
+scoreGMM = []
 
-[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=10, shuffle=False)
+USEDF = 8
 
+[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1.5, shuffle=False)
 
-kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(X)
-Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(X)
-Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(X)
+for ix in range(0, 20):
+    kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(X[:, 0:USEDF])
+    Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(X[:, 0:USEDF])
+    Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(X[:, 0:USEDF])
 
-print(metrics.fowlkes_mallows_score(Y, kMeans))
-print(metrics.fowlkes_mallows_score(Y, Agglo))
-print(metrics.fowlkes_mallows_score(Y, Gmm))
+    scoreKM.append(metrics.adjusted_rand_score(Y, kMeans))
+    scoreHier.append(metrics.adjusted_rand_score(Y, Agglo))
+    scoreGMM.append(metrics.adjusted_rand_score(Y, Gmm))
+    uFeat.append(USEDF - NINFO - NRED - NREP)
+
+    USEDF += 5
+
+plt.plot(uFeat, scoreKM, label="K-Means")
+plt.plot(uFeat, scoreHier, label="Agglomerative (hierarchical)")
+plt.plot(uFeat, scoreGMM, label="GMM")
+plt.title("Adjusted Rand index score for fixed 3 informative features, 5 classes")
+plt.ylabel("Adjusted rand score (0-1)")
+plt.xlabel("# unrelated features")
+plt.legend()
+plt.show()
+
