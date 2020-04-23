@@ -17,7 +17,7 @@ NCLUSTCLASS = 1
 
 nUnrelated = NFEAT - NINFO - NRED - NREP
 
-[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=5, shuffle=False)
+[X, Y] = dat.make_classification(n_samples=100, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=5, shuffle=False)
 
 nUseful = NINFO + NRED + NREP
 print("Useful features: first {}".format(NINFO))
@@ -77,9 +77,9 @@ scoreGMM = []
 
 USEDF = 4
 
-[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1, shuffle=False)
+[X, Y] = dat.make_classification(n_samples=1000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1, shuffle=False)
 
-for ix in range(0, 10):
+for ix in range(0, 50):
     kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(X[:, 0:USEDF])
     Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(X[:, 0:USEDF])
     Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(X[:, 0:USEDF])
@@ -89,7 +89,7 @@ for ix in range(0, 10):
     scoreGMM.append(metrics.adjusted_rand_score(Y, Gmm))
     uFeat.append(USEDF - NINFO - NRED - NREP)
 
-    USEDF += 100
+    USEDF += 10
 
 fig3 = plt.figure(3)
 plt.plot(uFeat, scoreKM, label="K-Means")
