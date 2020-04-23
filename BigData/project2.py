@@ -25,8 +25,8 @@ print("Useful features: first {}".format(NINFO))
 sns.set()
 binwidth = 1
 
-fig, sub = plt.subplots(2,int(NFEAT/2))
-plt.subplots_adjust(wspace=0.6, hspace=0.6)
+fig1, sub = plt.subplots(2,int(NFEAT/2))
+fig1.subplots_adjust(wspace=0.6, hspace=0.6)
 colors = ['b', 'r', 'g', 'y', 'c']
 classes = []
 
@@ -40,16 +40,35 @@ for c in range(0, NCLASS):
         ax.set_xlabel("Feature values")
         ax.set_ylabel("Density")
 
-fig.legend(handles=classes)
-fig.suptitle("Univariant Histogram of features across data")
-plt.show()
+fig1.legend(handles=classes)
+fig1.suptitle("Univariant Histogram of features across data")
+
+fig2, sub = plt.subplots(2, 2)
+fig2.subplots_adjust(wspace=0.6, hspace=0.6)
+colors = ['b', 'r', 'g']
+markers = ['o', '^', 's']
+featurePairs = [[0, 1], [2, 3], [4, 5], [6, 7]]
+
+for ix, ax in enumerate(sub.flatten()):
+    fDim = featurePairs[ix]
+    for c in range(0,3):
+        dataX = X[Y==c, fDim[0]]
+        dataY = X[Y==c, fDim[1]]
+        ax.scatter(dataX, dataY, color=colors[c], marker=markers[c])
+    
+    ax.set_xlabel("Feature {}".format(fDim[0]))
+    ax.set_ylabel("Feature {}".format(fDim[1]))
+
+fig2.legend(handles=classes)
+fig2.suptitle("2D Scatter Plot of data in different feature dimensions")
+    
 
 
-NFEAT = 120
-NINFO = 4
+NFEAT = 70
+NINFO = 3
 NRED = 0
 NREP = 0
-NCLASS = 5
+NCLASS = 3
 NCLUSTCLASS = 1
 
 uFeat = []
@@ -57,11 +76,11 @@ scoreKM = []
 scoreHier = []
 scoreGMM = []
 
-USEDF = 8
+USEDF = 4
 
-[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1.5, shuffle=False)
+[X, Y] = dat.make_classification(n_samples=5000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1, shuffle=False)
 
-for ix in range(0, 20):
+for ix in range(0, 30):
     kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(X[:, 0:USEDF])
     Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(X[:, 0:USEDF])
     Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(X[:, 0:USEDF])
@@ -71,12 +90,13 @@ for ix in range(0, 20):
     scoreGMM.append(metrics.adjusted_rand_score(Y, Gmm))
     uFeat.append(USEDF - NINFO - NRED - NREP)
 
-    USEDF += 5
+    USEDF += 2
 
+fig3 = plt.figure(3)
 plt.plot(uFeat, scoreKM, label="K-Means")
 plt.plot(uFeat, scoreHier, label="Agglomerative (hierarchical)")
 plt.plot(uFeat, scoreGMM, label="GMM")
-plt.title("Adjusted Rand index score for fixed 3 informative features, 5 classes")
+plt.title("Adjusted Rand index score for fixed {} informative features, {} classes".format(NINFO, NCLASS))
 plt.ylabel("Adjusted rand score (0-1)")
 plt.xlabel("# unrelated features")
 plt.legend()
