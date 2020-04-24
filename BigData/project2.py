@@ -2,6 +2,7 @@ import sklearn.datasets as dat
 import sklearn.cluster as clust
 import sklearn.mixture as mix
 from sklearn import metrics
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
@@ -79,10 +80,16 @@ USEDF = 4
 
 [X, Y] = dat.make_classification(n_samples=1000, n_features=NFEAT, n_informative=NINFO, n_redundant=NRED, n_repeated=NREP, n_classes=NCLASS, n_clusters_per_class=NCLUSTCLASS, class_sep=1, shuffle=False)
 
+randvec = np.random.uniform(-1, 1, 1000*500)
+uni_noise = randvec.reshape(1000, 500)
+scaler = StandardScaler()
+
 for ix in range(0, 50):
-    kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(X[:, 0:USEDF])
-    Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(X[:, 0:USEDF])
-    Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(X[:, 0:USEDF])
+    data = np.hstack((X[:, 0:NINFO], uni_noise[:, :USEDF]))
+    data = scaler.fit_transform(data)
+    kMeans = clust.KMeans(n_clusters=NCLASS*NCLUSTCLASS).fit_predict(data)
+    Agglo = clust.AgglomerativeClustering(n_clusters=NCLASS*NCLUSTCLASS, affinity='euclidean').fit_predict(data)
+    Gmm = mix.GaussianMixture(n_components=NCLASS).fit_predict(data)
 
     scoreKM.append(metrics.adjusted_rand_score(Y, kMeans))
     scoreHier.append(metrics.adjusted_rand_score(Y, Agglo))
