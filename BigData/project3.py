@@ -10,15 +10,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import math as m
 
-p, n, GAMMA = 300, 1000, 11
+p, n, GAMMA = 50, 300, 11
 nGroups = 10
 nZeros = round(p/nGroups)
 gSize = round(p/nGroups)
 print(gSize)
 
 beta = np.random.normal(loc=0, scale=1, size=p)
-X = np.random.normal(loc=0, scale=1, size=n*p)
-X = X.reshape((n, p))
+cov = np.eye(p)
+X = np.random.multivariate_normal(mean=np.zeros(p), cov=cov, size=n)
 
 sigma_e = m.sqrt(np.linalg.norm(np.dot(X, beta))*np.linalg.norm(np.dot(X, beta))/(n - 1))/GAMMA
 e = np.random.normal(loc=0, scale=sigma_e, size=n)
@@ -44,12 +44,16 @@ for ix in range(1, nGroups):
     start += gSize
 
 # Uncomment to give feature param. wrong groups
-groups = np.random.randint(0, nGroups, p)
-print(groups)
-print(beta_bool)
+# groups = np.random.randint(0, nGroups, p)
+
+
+# l1_reg is the regularisation coeff. for coeffcient sparsiy pen.
+# l2_reg is the regularisation coefficient(s) for the group sparsity penalty
 
 gl = GroupLasso(
     groups=groups,
+    l1_reg=0.05,
+    group_reg=0.05,
     supress_warning=True
 )
 
@@ -74,14 +78,20 @@ sns.set()
 plt.figure()
 plt.plot(beta, '.', label="True coefficients")
 plt.plot(beta_hat, '.', label="Estimated coefficients")
+plt.title("Group Lasso estimation for p={}, n={}, nZeros={}".format(p, n, nZeros))
 plt.legend()
 
 plt.figure()
 plt.plot([beta.min(), beta.max()], [beta_hat.min(), beta_hat.max()], 'gray')
 plt.scatter(beta, beta_hat, s=10)
+plt.title("Group Lasso estimation for p={}, n={}, nZeros={}".format(p, n, nZeros))
 plt.ylabel("Learned coefficients")
 plt.xlabel("True coefficients")
 
+df_cm = pd.DataFrame(conf_m)
+plt.figure()
+plt.title("Group Lasso estimation for p={}, n={}, nZeros={}".format(p, n, nZeros))
+sns.heatmap(df_cm, annot=True, fmt='d')
 
 plt.show()
 
