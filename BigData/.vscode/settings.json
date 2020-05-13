@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/adamwirehed/Documents/anaconda3/python.app/Contents/MacOS/python"
+    "python.pythonPath": "/Users/adamwirehed/Documents/anaconda3/python.app/Contents/MacOS/python",
+    "python.linting.enabled": false
 }
