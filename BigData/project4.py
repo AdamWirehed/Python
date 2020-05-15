@@ -10,12 +10,13 @@ from sklearn.metrics.pairwise import sigmoid_kernel
 from sklearn.metrics.pairwise import laplacian_kernel
 from sklearn.metrics.pairwise import polynomial_kernel
 from sklearn.datasets import make_classification
-from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import KernelPCA
 import sklearn.datasets as data
 
 N = 300
-K = 2
-F = 10
+K = 4
+F = 2
 np.random.seed(0)
 
 def linear_kernel(v):
@@ -26,8 +27,8 @@ def poly_kernel(v, scale, offset, m):
     mat = polynomial_kernel(v, gamma=scale, degree=m, coef0=offset)
     return mat
 
-def RBF_kern(v, sigma=100):
-    mat = rbf_kernel(X=v, gamma=1/(2*sigma**2))
+def RBF_kern(v, gam):
+    mat = rbf_kernel(X=v, gamma=gam)
     return mat
 
 def laplacian_kern(v, alpha=1):
@@ -41,7 +42,6 @@ def sigmoid_kern(v, alpha=1, coeff=1):
 
 T = np.empty(shape=(N,K))
 
-x = np.array(([1, 2, 3], [4, 5, 6], [7, 8, 9]))
 Z = np.zeros((N, K))
 ixC = np.random.randint(low=0, high=K, size=(N,1))
 
@@ -49,12 +49,17 @@ for ix in range(0, N):
     Z[ix, ixC[ix]] = 1
 
 n = np.zeros(shape=(K, 1))
-#X = make_classification(n_samples=N, n_features=F, n_informative=F, n_redundant=0, n_repeated=0, n_classes=K, n_clusters_per_class=1, class_sep=3)
+#X = make_classification(n_samples=N, n_features=F, n_informative=F, n_redundant=0, n_repeated=0, n_classes=K, n_clusters_per_class=1, class_sep=1)
 #X = data.make_moons(n_samples=N, noise=1/10)
-X = data.make_circles(n_samples=N, noise=0.1, factor=0.1)
+X = data.make_circles(n_samples=int(N/2), noise=0.1, factor=0.1)
 #X = data.make_checkerboard(shape=(2,2), n_clusters=1, noise=1/5)
 
 X = X[0]
+
+X2 = data.make_circles(n_samples=int(N/2), noise=0.1, factor=0.1)
+X2 = X2[0]
+X = np.vstack((X, X2))
+X[int(N/2):, :] += 2
 
 # X = np.zeros(shape=(N, K))
 # half = int(N/2)
@@ -63,19 +68,21 @@ X = X[0]
 # X[:half, 1] = X[:half, 0]**3 + np.random.normal(loc=0, scale=10, size=(1, half))
 # X[half:, 1] = X[half:, 0]**3 + np.random.normal(loc=0, scale=10, size=(1, half)) + 1000
 
-print(X)
+# X[:, 0] = (X[:, 0] - np.mean(X[:, 0]))/np.std(X[:, 0])
+# X[:, 1] = (X[:, 1] - np.mean(X[:, 1]))/np.std(X[:, 1])
 
-pca = PCA(n_components=2)
+#gramLin = linear_kernel(X)
+deg = 3
+gam = 2
+#gramPoly = poly_kernel(X, m=deg, scale=1, offset=1)
+gramRBF = RBF_kern(X, gam)
+# gramLap = laplacian_kern(X)
+# gramSig = sigmoid_kern(X)
+
+gram = gramRBF
+
+pca = KernelPCA(n_components=2, kernel='rbf', degree=deg, gamma=gam)
 pComp = pca.fit_transform(X)
-
-gramLin = linear_kernel(X)
-deg = 10
-gramPoly = poly_kernel(X, m=deg, scale=1, offset=1)
-gramRBF = RBF_kern(X)
-gramLap = laplacian_kern(X)
-gramSig = sigmoid_kern(X)
-
-gram = gramSig
 
 hell = True
 it = 0
@@ -119,13 +126,19 @@ plt.xlabel("Feature 1")
 
 plt.figure()
 plt.scatter(pComp[:, 0], pComp[:,1], c=minIx, cmap=matplotlib.colors.ListedColormap(colors))
-plt.title("Clusterd centered data (n={}) with estimated cluster groups using Sigmoid".format(N, deg))
+plt.title("Clusterd data (n={}) with estimated cluster groups using RBF kernel".format(N, deg))
 plt.ylabel("PCA 0")
 plt.xlabel("PCA 1")
 for c in range(0, K):
     patch = mpatches.Patch(color=cmap.colors[c], label="Class {}".format(c))
     classes.append(patch)
 plt.legend(handles=classes)
+
+plt.figure()
+plt.scatter(X[:, 0], X[:,1], c=minIx, cmap=matplotlib.colors.ListedColormap(colors))
+plt.title("Clusterd data (n={}) with estimated cluster groups using RBF kernel".format(N, deg))
+plt.ylabel("Feature 0")
+plt.xlabel("Feature 1")
 plt.legend(handles=classes)
 
 plt.show()
