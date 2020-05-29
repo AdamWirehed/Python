@@ -30,7 +30,7 @@ nVal = np.shape(X_valid)[0]
 nFeat = np.shape(X_train)[1]
 
 # PCA analysis, analysis only done on traning data and transformed on both training and validation data
-pca = PCA(n_components=10)
+pca = PCA()
 pca.fit(X_train)
 pcaTrain = pca.transform(X_train)
 pcaValid = pca.transform(X_valid)
@@ -46,7 +46,7 @@ print()
 
 # Models, nr of folds = 5
 logCV = LogisticRegressionCV(penalty='l1', solver='liblinear', cv=5)  # Lasso-regualated Logistic regression
-ridgeCV = RidgeClassifierCV(cv=5)
+ridgeCV = RidgeClassifierCV(alphas=np.array([0.01, 0.1, 1, 100, 500, 1000, 5000, 10000]) ,cv=5)
 forest = ExtraTreesClassifier(n_estimators=nFeat)
 
 logResOrg = []
@@ -59,11 +59,23 @@ for ix in range(10):
     logCV.fit(X_train, y_train)
     ridgeCV.fit(X_train, y_train)
 
+    # print(np.shape(logCV.coef_))
+    # print(np.sum(np.sum(logCV.coef_ == 0)))
+
+    print(np.shape(ridgeCV.coef_))
+    print(np.sum(np.sum(ridgeCV.coef_ == 0)))
+
+    # print("Log. Hyperparameter: λ = {:.4f}".format(logCV.C_[0]))
+    # print("Ridge hyperparameter: α = {:.4f}".format(ridgeCV.alpha_))
+
     logResOrg.append(logCV.score(X_valid, y_valid))
     ridgeResOrg.append(ridgeCV.score(X_valid, y_valid))
 
     logCV.fit(pcaTrain, y_train)
     ridgeCV.fit(pcaTrain, y_train)
+
+    # print("Log. Hyperparameter: λ = {:.4f}".format(logCV.C_[0]))
+    # print("Ridge hyperparameter: α = {:.4f}".format(ridgeCV.alpha_))
 
     logResPCA.append(logCV.score(pcaValid, y_valid))
     ridgeResPCA.append(ridgeCV.score(pcaValid, y_valid))
@@ -75,7 +87,18 @@ print("Ridge regression: {} (org. Data)".format(np.mean(ridgeResOrg)))
 print("Logistic regression: {} (PCA dim.)".format(np.mean(logResPCA)))
 print("Ridge regression: {} (PCA dim.) \n".format(np.mean(ridgeResPCA)))
 
+# Special test with only the 2 best features
 
+logCV.fit(X_train[:, [232, 323]], y_train)
+ridgeCV.fit(X_train[:, [232, 323]], y_train)
+
+print(logCV.score(X_valid[:, [232, 323]], y_valid))
+print(ridgeCV.score(X_valid[:, [232, 323]], y_valid))
+
+print(logCV.C_[0])
+print(ridgeCV.alpha_)
+
+# Plot and stuff
 sns.set()
 cmap = plt.cm.tab10
 colors = [cmap.colors[0], cmap.colors[5]]
@@ -123,11 +146,18 @@ for f in range(10):
 
 plt.figure()
 plt.title("Feature importances (permutation)")
-plt.bar(range(10), result.importances_mean[ind_per[:10]],
-        color="g", yerr=result.importances_std[ind_per[:10]], align="center")
-plt.xticks(range(10), ind_per)
-plt.xlim([-1, 10])
-plt.xlabel("Importance metric")
-plt.ylabel("Feature index")
+plt.bar(range(20), result.importances_mean[ind_per[:20]],
+        color="g", yerr=result.importances_std[ind_per[:20]], align="center")
+plt.xticks(range(20), ind_per)
+plt.xlim([-1, 20])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.scatter(X_valid[:, 232], X_valid[:, 323], c=y_valid, cmap=matplotlib.colors.ListedColormap(colors))
+plt.title("Validation data plotted in the two most important features")
+plt.xlabel("Most important feature")
+plt.ylabel("2nd most important feature")
+plt.legend(handles=classes)
 
 plt.show()
