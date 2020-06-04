@@ -8,6 +8,7 @@ from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.inspection import permutation_importance
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import matplotlib
 import matplotlib.patches as mpatches
@@ -62,8 +63,8 @@ for ix in range(10):
     # print(np.shape(logCV.coef_))
     # print(np.sum(np.sum(logCV.coef_ == 0)))
 
-    print(np.shape(ridgeCV.coef_))
-    print(np.sum(np.sum(ridgeCV.coef_ == 0)))
+    # print(np.shape(ridgeCV.coef_))
+    # print(np.sum(np.sum(ridgeCV.coef_ == 0)))
 
     # print("Log. Hyperparameter: λ = {:.4f}".format(logCV.C_[0]))
     # print("Ridge hyperparameter: α = {:.4f}".format(ridgeCV.alpha_))
@@ -86,17 +87,6 @@ print("Ridge regression: {} (org. Data)".format(np.mean(ridgeResOrg)))
 
 print("Logistic regression: {} (PCA dim.)".format(np.mean(logResPCA)))
 print("Ridge regression: {} (PCA dim.) \n".format(np.mean(ridgeResPCA)))
-
-# Special test with only the 2 best features
-
-logCV.fit(X_train[:, [232, 323]], y_train)
-ridgeCV.fit(X_train[:, [232, 323]], y_train)
-
-print(logCV.score(X_valid[:, [232, 323]], y_valid))
-print(ridgeCV.score(X_valid[:, [232, 323]], y_valid))
-
-print(logCV.C_[0])
-print(ridgeCV.alpha_)
 
 # Plot and stuff
 sns.set()
@@ -122,18 +112,51 @@ logCV.fit(X_train, y_train)
 ridgeCV.fit(X_train, y_train)
 forest.fit(X_train, y_train)
 
-result = permutation_importance(logCV, X_train, y_train, n_repeats=10)
-ind_per = np.argsort(result.importances_mean)[::-1]
+resultLas = permutation_importance(logCV, X_train, y_train, n_repeats=10)
+ind_perLas = np.argsort(resultLas.importances_mean)[::-1]
 
-importances = forest.feature_importances_
-std = np.std([tree.feature_importances_ for tree in forest.estimators_], axis=0)
-indices = np.argsort(importances)[::-1]
+resultRid = permutation_importance(ridgeCV, X_train, y_train, n_repeats=10)
+ind_perRid = np.argsort(resultRid.importances_mean)[::-1]
 
 # Print the feature ranking
-print("Feature ranking:")
+print("Feature ranking Lasso:")
 
 for f in range(10):
-    print("%d. feature %d (%f +- %f)" % (f + 1, ind_per[f], result.importances_mean[ind_per[f]], result.importances_std[ind_per[f]]))
+    print("%d. feature %d (%f +- %f)" % (f + 1, ind_perLas[f], resultLas.importances_mean[ind_perLas[f]], resultLas.importances_std[ind_perLas[f]]))
+
+print("\nFeature ranking Ridge:")
+
+for f in range(10):
+    print("%d. feature %d (%f +- %f)" % (f + 1, ind_perRid[f], resultRid.importances_mean[ind_perRid[f]], resultRid.importances_std[ind_perRid[f]]))
+
+
+# Special test with only the 2/50 best features
+
+nF = 50
+
+lasRes50 = []
+ridgeRes50 = []
+lasParam50 = []
+ridgeParam50 = []
+
+for ix in range(10):
+    logCV.fit(X_train[:, ind_perLas[:nF]], y_train)
+    ridgeCV.fit(X_train[:, ind_perLas[:nF]], y_train)
+
+    res2Las = logCV.predict(X_valid[:, ind_perLas[:nF]])
+    res2Rid = ridgeCV.predict(X_valid[:, ind_perLas[:nF]])
+
+    lasRes50.append(logCV.score(X_valid[:, ind_perLas[:nF]], y_valid))
+    ridgeRes50.append(ridgeCV.score(X_valid[:, ind_perLas[:nF]], y_valid))
+
+    lasParam50.append(logCV.C_[0])
+    ridgeParam50.append(ridgeCV.alpha_)
+
+print(np.mean(lasRes50))
+print(np.mean(ridgeRes50))
+
+print(np.mean(logCV.C_[0]))
+print(np.mean(ridgeCV.alpha_))
 
 # plt.figure()
 # plt.title("Feature importances (forest)")
@@ -144,12 +167,40 @@ for f in range(10):
 # plt.ylabel("Feature index")
 # plt.xlim([-1, 10])
 
+nFeatLas = 10
+nFeatRid = 20
+
 plt.figure()
-plt.title("Feature importances (permutation)")
-plt.bar(range(20), result.importances_mean[ind_per[:20]],
-        color="g", yerr=result.importances_std[ind_per[:20]], align="center")
-plt.xticks(range(20), ind_per)
-plt.xlim([-1, 20])
+plt.title("Feature importances (permutation) Lasso")
+plt.bar(range(nFeatLas), resultLas.importances_mean[ind_perLas[:nFeatLas]],
+        color="g", yerr=resultLas.importances_std[ind_perLas[:nFeatLas]], align="center")
+plt.xticks(range(nFeatLas), ind_perLas)
+plt.xlim([-1, nFeatLas])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (permutation) Lasso")
+plt.scatter(x=range(len(resultLas.importances_mean[ind_perLas])), y =resultLas.importances_mean[ind_perLas], c='g')
+plt.xticks([], [])
+plt.xlim([-1, nFeat])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (permutation) Ridge")
+plt.bar(range(nFeatRid), resultRid.importances_mean[ind_perRid[:nFeatRid]],
+        color="r", yerr=resultRid.importances_std[ind_perRid[:nFeatRid]], align="center")
+plt.xticks(range(nFeatRid), ind_perRid)
+plt.xlim([-1, nFeatRid])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (permutation) Ridge")
+plt.scatter(x=range(len(resultRid.importances_mean[ind_perRid])), y =resultRid.importances_mean[ind_perRid], c='r')
+plt.xticks([], [])
+plt.xlim([-1, nFeat])
 plt.ylabel("Importance metric")
 plt.xlabel("Feature index")
 
@@ -159,5 +210,34 @@ plt.title("Validation data plotted in the two most important features")
 plt.xlabel("Most important feature")
 plt.ylabel("2nd most important feature")
 plt.legend(handles=classes)
+
+logCV.fit(X_train, y_train)
+ridgeCV.fit(X_train, y_train)
+
+resLas = logCV.predict(X_valid)
+resRid = ridgeCV.predict(X_valid)
+
+confLas = confusion_matrix(y_valid, resLas)
+confRid = confusion_matrix(y_valid, resRid)
+conf2Las = confusion_matrix(y_valid, res2Las)
+conf2Rid = confusion_matrix(y_valid, res2Rid)
+
+plt.figure()
+sns.heatmap(confLas, annot=True, fmt='d', yticklabels=["True Class 0", "True Class 1"], xticklabels=["Classified 0", "Classified 1"])
+plt.title("Confusion Matrix - Lasso")
+
+plt.figure()
+sns.heatmap(confRid, annot=True, fmt='d', yticklabels=["True Class 0", "True Class 1"], xticklabels=["Classified 0", "Classified 1"])
+plt.title("Confusion Matrix - Ridge")
+
+plt.figure()
+sns.heatmap(conf2Las, annot=True, fmt='d', yticklabels=["True Class 0", "True Class 1"], xticklabels=["Classified 0", "Classified 1"])
+plt.title("Confusion Matrix - Lasso (2 feat.)")
+
+plt.figure()
+sns.heatmap(conf2Rid, annot=True, fmt='d', yticklabels=["True Class 0", "True Class 1"], xticklabels=["Classified 0", "Classified 1"])
+plt.title("Confusion Matrix - Ridge (2 feat.)")
+
+print(sum(y_valid == 0)/nVal)
 
 plt.show()
