@@ -140,20 +140,20 @@ lasParam50 = []
 ridgeParam50 = []
 
 for ix in range(10):
-    logCV.fit(X_train[:, ind_perLas[:nF]], y_train)
-    ridgeCV.fit(X_train[:, ind_perLas[:nF]], y_train)
+    logCV.fit(X_train[:, ind_perLas[2:nF]], y_train)
+    ridgeCV.fit(X_train[:, ind_perLas[2:nF]], y_train)
 
-    res2Las = logCV.predict(X_valid[:, ind_perLas[:nF]])
-    res2Rid = ridgeCV.predict(X_valid[:, ind_perLas[:nF]])
+    res2Las = logCV.predict(X_valid[:, ind_perLas[2:nF]])
+    res2Rid = ridgeCV.predict(X_valid[:, ind_perLas[2:nF]])
 
-    lasRes50.append(logCV.score(X_valid[:, ind_perLas[:nF]], y_valid))
-    ridgeRes50.append(ridgeCV.score(X_valid[:, ind_perLas[:nF]], y_valid))
+    lasRes50.append(logCV.score(X_valid[:, ind_perLas[2:nF]], y_valid))
+    ridgeRes50.append(ridgeCV.score(X_valid[:, ind_perLas[2:nF]], y_valid))
 
     lasParam50.append(logCV.C_[0])
     ridgeParam50.append(ridgeCV.alpha_)
 
-print(np.mean(lasRes50))
-print(np.mean(ridgeRes50))
+print("Lasso 48: {}".format(np.mean(lasRes50)))
+print("Ridge 48: {}".format(np.mean(ridgeRes50)))
 
 print(np.mean(logCV.C_[0]))
 print(np.mean(ridgeCV.alpha_))
