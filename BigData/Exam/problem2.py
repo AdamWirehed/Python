@@ -10,6 +10,7 @@ from scipy.cluster.hierarchy import dendrogram
 from sklearn.metrics import silhouette_samples, silhouette_score
 from sklearn.covariance import EllipticEnvelope
 from sklearn.ensemble import IsolationForest
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.cluster import KMeans
 from sklearn import metrics
 import matplotlib
@@ -71,7 +72,6 @@ X_embedded = t_sne.fit_transform(X_scaled)
 
 # Removing outliers using EllipticEnvelope
 rev = IsolationForest().fit_predict(X_scaled)
-print(rev)
 outliers = np.where(rev == -1)[0]
 newX = np.delete(X, outliers, axis=0)
 X_embedded_new = np.delete(X_embedded, outliers, axis=0)
@@ -82,6 +82,20 @@ print(np.sum(rev == -1))
 kmeans3 = KMeans(n_clusters=3).fit_predict(newX)
 kmeans4 = KMeans(n_clusters=4).fit_predict(newX)
 
+# Feature importance based on KMeans clusters
+forest = ExtraTreesClassifier(n_estimators=250).fit(newX, kmeans3)
+
+importances3 = forest.feature_importances_
+std3 = np.std([tree.feature_importances_ for tree in forest.estimators_],
+             axis=0)
+indices3 = np.argsort(importances3)[::-1]
+
+forest = forest.fit(newX, kmeans4)
+importances4 = forest.feature_importances_
+std4 = np.std([tree.feature_importances_ for tree in forest.estimators_],
+             axis=0)
+indices4 = np.argsort(importances4)[::-1]
+
 
 # Clustering with silhouette scores, Org. Data
 range_n_clusters = range(2, 12)
@@ -90,7 +104,7 @@ sil_scores = []
 for n_clusters in range_n_clusters:
     # Initialize the clusterer with n_clusters value and a random generator
     # seed of 10 for reproducibility.
-    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    clusterer = KMeans(n_clusters=n_clusters)
     cluster_labels = clusterer.fit_predict(X_scaled)
 
     # The silhouette_score gives the average value for all the samples.
@@ -169,7 +183,7 @@ sil_scores = []
 for n_clusters in range_n_clusters:
     # Initialize the clusterer with n_clusters value and a random generator
     # seed of 10 for reproducibility.
-    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    clusterer = KMeans(n_clusters=n_clusters)
     cluster_labels = clusterer.fit_predict(pcaData)
 
     # The silhouette_score gives the average value for all the samples.
@@ -194,7 +208,7 @@ sil_scores = []
 for n_clusters in range_n_clusters:
     # Initialize the clusterer with n_clusters value and a random generator
     # seed of 10 for reproducibility.
-    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    clusterer = KMeans(n_clusters=n_clusters)
     cluster_labels = clusterer.fit_predict(newX)
 
     # The silhouette_score gives the average value for all the samples.
@@ -223,6 +237,42 @@ plt.title('Hierarchical Clustering Dendrogram for data without outliers')
 plot_dendrogram(agglo, truncate_mode='level', p=5)
 plt.xlabel("Number of points in node (or index of point if no parenthesis).")
 
+# Plot the impurity-based feature importances of the forest
+nFeat = 10
+plt.figure()
+plt.title("Feature importances (n_clusters=3)")
+plt.bar(range(nFeat), importances3[indices3[:nFeat]],
+        color="r")
+plt.xticks(range(nFeat), indices3)
+plt.xlim([-1, nFeat])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (n_clusters=3)")
+plt.scatter(x=range(len(importances3)), y=importances3[indices3], c='r')
+plt.xticks([], [])
+plt.xlim([-1, len(importances3)])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (n_clusters=4)")
+plt.bar(range(nFeat), importances4[indices4[:nFeat]],
+        color="r")
+plt.xticks(range(nFeat), indices4)
+plt.xlim([-1, nFeat])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
+plt.figure()
+plt.title("Feature importances (n_clusters=4)")
+plt.scatter(x=range(len(importances4)), y=importances4[indices4], c='r')
+plt.xticks([], [])
+plt.xlim([-1, len(importances4)])
+plt.ylabel("Importance metric")
+plt.xlabel("Feature index")
+
 plt.figure()
 fIx = 220
 plt.scatter(x=range(len(X_scaled[:, fIx])), y=X_scaled[:, fIx])
@@ -236,5 +286,35 @@ plt.scatter(x=range(len(X_scaled[:, fIx])), y=X_scaled[:, fIx])
 plt.xlabel("Data point index")
 plt.ylabel("Feature value")
 plt.title("Feature value {} for all data points (scaled)".format(fIx))
+
+fig1, sub = plt.subplots(1, 5)
+fig1.subplots_adjust(wspace=0.6, hspace=0.6)
+binwidth = 1
+
+for c in range(0, 3):
+    for ix, ax in enumerate(sub.flatten()):
+        data = newX[np.where(kmeans3==c)[0], indices3[ix]]
+        ax.hist(data, color=colors[c], bins=np.arange(min(data), max(data) + binwidth, binwidth), density=True)
+        ax.set_title("Feature {}".format(indices3[ix]))
+        ax.set_xlabel("Feature values")
+        ax.set_ylabel("Density")
+
+fig1.legend(handles=classes[:-2])
+fig1.suptitle("Univariant Histogram of 5 most important features across data (n_cluster=3)")
+
+fig2, sub = plt.subplots(1, 5)
+fig2.subplots_adjust(wspace=0.6, hspace=0.6)
+binwidth = 1
+
+for c in range(0, 4):
+    for ix, ax in enumerate(sub.flatten()):
+        data = newX[np.where(kmeans4==c)[0], indices4[ix]]
+        ax.hist(data, color=colors[c], bins=np.arange(min(data), max(data) + binwidth, binwidth), density=True)
+        ax.set_title("Feature {}".format(indices4[ix]))
+        ax.set_xlabel("Feature values")
+        ax.set_ylabel("Density")
+
+fig2.legend(handles=classes[:-1])
+fig2.suptitle("Univariant Histogram of 5 most important features across data (n_cluster=4)")
 
 plt.show()
