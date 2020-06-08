@@ -70,7 +70,7 @@ X_embedded = t_sne.fit_transform(X_scaled)
 # newX = np.delete(X, outliers, axis=1)
 # print(np.shape(newX))
 
-# Removing outliers using EllipticEnvelope
+# Removing outliers using Isolation Forest
 rev = IsolationForest().fit_predict(X_scaled)
 outliers = np.where(rev == -1)[0]
 newX = np.delete(X, outliers, axis=0)
