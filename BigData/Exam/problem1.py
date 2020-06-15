@@ -81,7 +81,7 @@ for ix in range(10):
     logResPCA.append(logCV.score(pcaValid, y_valid))
     ridgeResPCA.append(ridgeCV.score(pcaValid, y_valid))
 
-
+print(logResOrg)
 print("Logistic regression: {} (org. Data)".format(np.mean(logResOrg)))
 print("Ridge regression: {} (org. Data)".format(np.mean(ridgeResOrg)))
 

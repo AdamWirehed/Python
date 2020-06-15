@@ -12,7 +12,7 @@ def listcommon(testlist, biglist):
 
     return list(set(testlist) & set(biglist)) 
 
-n = 10000
+n = 5000
 p = 50
 s = 0.1
 gamma = 1
